@@ -1,8 +1,6 @@
 # surveytool
 Fork of php-survey-builder
 
-![screenshot of php-survey-builder](https://raw.github.com/phpdave11/php-survey-builder/master/screenshots/survey_edit.png)
-
 ## Default login
 
 The default login is 'root@localhost' with a password of '12345'. You can add and remove logins from the Users tab.
@@ -10,7 +8,7 @@ The default login is 'root@localhost' with a password of '12345'. You can add an
 ## Quick Start
 ```sh
 git clone https://github.com/codejkn3/surveytool.git
-cd php-survey-builder
+cd surveytool
 php -S localhost:8080
 ```
 
