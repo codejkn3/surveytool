@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>quesplex Login</title>
+  <title>surveytool Login</title>
   <?php include 'stylesheets.php'; ?>
   <?php include 'scripts.php'; ?>
   <script type="text/javascript">
