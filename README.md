@@ -8,7 +8,7 @@ The default login is 'root@localhost' with a password of '12345'. You can add an
 ## Quick Start
 ```sh
 git clone https://github.com/codejkn3/surveytool.git
-cd php-survey-builder
+cd surveytool
 php -S localhost:8080
 ```
 
