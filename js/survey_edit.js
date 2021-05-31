@@ -304,6 +304,7 @@ function validateForm4() { //This works. Use for comparison
 $(function()
 {
     $('#submitButton').button({ icons: { primary: 'ui-icon-disk' }}).click(validateForm);
+    $('#submitAddButton').button({ icons: { primary: 'ui-icon-disk' }}).click(validateForm4);
     //$('#submitButton').button({ icons: { primary: 'ui-icon-disk' }}).click(alert("hi"));
     $('#delete_survey').button({ icons: { primary: 'ui-icon-closethick' }}).click(deleteSurvey);
     $('#add_question').button({ icons: { primary: 'ui-icon-plusthick' }}).click(addQuestion);

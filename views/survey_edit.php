@@ -47,7 +47,13 @@
               </div>
               <div class="submit_button">
                 <button id="delete_survey" name="delete_survey">Delete Survey</button>
-                <button id="submitButton" name="submitButton">Save</button>
+                <?php 
+                if ($survey->survey_id) {
+                  echo '<button id="submitButton" name="submitButton">Save</button>';
+                } else {
+                  echo '<button id="submitAddButton" name="submitAddButton">Add</button>';
+                }
+                ?>
               </div>
             </div>
           </form>
