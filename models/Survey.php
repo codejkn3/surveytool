@@ -18,6 +18,7 @@ class Survey extends Model
     protected static $fields = [
         'survey_id',
         'survey_name',
+        'owner_id',
     ];
 
     /**

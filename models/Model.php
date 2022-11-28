@@ -222,6 +222,7 @@ abstract class Model
         $fields = static::getFields();
 
         foreach ($values as $field => $value) {
+            print $field . "->" . $value;
             if (in_array($field, $fields) && ! empty($value)) {
                 $this->$field = $value;
             }
@@ -260,11 +261,7 @@ abstract class Model
         $fields = static::getFields();
         $table = static::getTable();
         $primaryKey = static::getPrimaryKey();
-        
-        // $where = 'lower(survey_name) = :survey_name';
-        // $params = ['survey_name' => "favorite database"];
-        // $jkn = Survey::queryRecordWithWhereClause($pdo, $where, $params);
-        
+              
 
         // If the primary key is empty, then do an insert
         if (empty($this->$primaryKey)) {

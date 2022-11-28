@@ -1,3 +1,3 @@
 <div id="footer">
-  Copyright &copy; 2021
+  Copyright &copy; 2022
 </div>

@@ -39,15 +39,14 @@
           <?php foreach ($surveys as $survey): ?>
             <tr>
               <td><?php echo htmlspecialchars($survey->survey_name); ?></td>
-              <td><a class="edit_survey" href="survey_edit.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">Edit Survey</a></td>
+              <td><a class="edit_survey" href="survey_edit.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>&owner_id=<?php echo htmlspecialchars($user->login_id); ?>">Edit Survey</a></td>
               <td><a class="take_survey" href="survey_form.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>" target="_blank">Take Survey</a></td>
               <td><a class="take_survey" href="survey_results.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">View Results</a></td>
               <td><a class="view_charts" href="survey_charts.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">View Charts</a></td>
-              <td><a class="view_charts" href="survey_edit.php?survey_id=<?php echo htmlspecialchars($survey->survey_id); ?>">Clone</a></td>
             </tr>
           <?php endforeach; ?>
         </table>
-        <a id="add_survey_button" href="survey_edit.php">Add Survey</a>
+        <a id="add_survey_button" href="survey_edit.php?owner_id=<?php echo htmlspecialchars($user->login_id); ?>">Add Survey</a>
       </div>
     </div>
     <?php include 'footer.php'; ?>

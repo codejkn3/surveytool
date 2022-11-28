@@ -17,7 +17,9 @@ class SurveyEditController extends Controller
      */
     protected function handleRequest(&$request)
     {
-        $user = $this->getUserSession(); //print_r($request);
+        $user = $this->getUserSession(); 
+        // print_r($request); 
+        // exit;
         $this->assign('user', $user);
 
         if (isset($request['action'])) {
@@ -52,9 +54,67 @@ class SurveyEditController extends Controller
             case 'delete_survey':
                 $this->deleteSurvey($request);
                 break;
+
+            case 'clone_survey':
+                $this->cloneSurvey($request);
+                break;                
         }
     }
 
+
+    /**
+     * Clone the current survey_id. Create a new survey and copy any question data to it
+     * then write to the database.
+     * J. Nealy
+     *
+     * @param array $request the page parameters from a form post or query string
+     *
+     * @return Survey $survey returns a Survey object
+     *
+     * @throws Exception throws exception if survey id is not found
+     */
+     protected function cloneSurvey(&$request)
+     {
+        $survey = Survey::queryRecordById($this->pdo, $request['survey_id']);
+        if (! $survey) {
+            throw new Exception('Survey ID '. $request['survey_id'] . ' not found in database');
+        }
+
+        $survey->getQuestions($this->pdo);
+
+        $cloned_survey = new Survey;
+        $cloned_survey->survey_name = $survey->survey_name. "(-cloned-)";
+        $cloned_survey->owner_id = $survey->owner_id;
+        $this->storeSurvey($cloned_survey);
+
+        for ($q=0; $q<(sizeof($survey->questions)); $q++) {
+            $cloned_survey->questions[$q] = new Question();
+            $cloned_survey->questions[$q]->getUniqueId();
+            $cloned_survey->questions[$q]->question_type = $survey->questions[$q]->question_type;
+            $cloned_survey->questions[$q]->survey_id = $cloned_survey->survey_id;
+            $cloned_survey->questions[$q]->question_text = $survey->questions[$q]->question_text;
+            $cloned_survey->questions[$q]->is_required = $survey->questions[$q]->is_required;
+            $cloned_survey->questions[$q]->question_order = $survey->questions[$q]->question_order;
+            $this->storeSurvey($cloned_survey);
+
+            $survey->questions[$q]->getChoices($this->pdo);
+            $my_choices = $survey->questions[$q]->choices;
+
+            for ($c=0; $c<(sizeof($survey->questions[$q]->choices));$c++) {
+                $cloned_survey->questions[$q]->choices[$c] = new Choice();
+                $cloned_survey->questions[$q]->choices[$c]->getUniqueId();                
+                $this->storeSurvey($cloned_survey);
+
+                $cloned_survey->questions[$q]->choices[$c]->question_id = $cloned_survey->questions[$q]->choices[$c]->question_id;
+                $cloned_survey->questions[$q]->choices[$c]->choice_text = $survey->questions[$q]->choices[$c]->choice_text;
+                $cloned_survey->questions[$q]->choices[$c]->choice_order = $survey->questions[$q]->choices[$c]->choice_order;
+                $this->storeSurvey($cloned_survey);
+            }
+
+        }
+     }
+     
+     
     /**
      * Query the database for a survey_id or create an empty survey.
      *
@@ -89,7 +149,11 @@ class SurveyEditController extends Controller
             //print_r($survey->existing_choice_ids);
         } else {
             $survey = new Survey; 
+            print_r($survey); print "<br>";
+            $user = $this->getUserSession(); 
+            $survey->owner_id = $user->login_id;
             $survey->questions = [];
+            print_r($survey) . "<br>";
 
             // Create 1 empty question
             $question = new Question;

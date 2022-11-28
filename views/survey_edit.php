@@ -50,6 +50,7 @@
                 <?php 
                 if ($survey->survey_id) {
                   echo '<button id="submitButton" name="submitButton">Save</button>';
+                  echo '<button id="cloneButton" name="cloneButton">Clone</button>';
                 } else {
                   echo '<button id="submitAddButton" name="submitAddButton">Add</button>';
                 }

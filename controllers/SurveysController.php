@@ -13,13 +13,20 @@ class SurveysController extends Controller
      * Handle the page request.
      *
      * @param array $request the page parameters from a form post or query string
+     * 
+     * JAN-28-2022 - updated parameters to queryRecordsWithWhereClause so that only
+     * surveys owned by the current user will be returned. Corresponding changes
+     * made to database structure as well.
+     * J. Nealy
      */
     protected function handleRequest(&$request)
     {
         $user = $this->getUserSession();
-        $this->assign('user', $user);
+        $userwhere = "owner_id = " . $user->login_id;
+        $this->assign('user', $user); 
 
-        $surveys = Survey::queryRecords($this->pdo, ['sort' => 'survey_name']);
+        // $surveys = Survey::queryRecords($this->pdo, ['sort' => 'survey_name']);
+        $surveys = Survey::queryRecordsWithWhereClause($this->pdo, $userwhere);
         $this->assign('surveys', $surveys);
 
         if (isset($request['status']) && $request['status'] == 'deleted') {

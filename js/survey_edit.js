@@ -83,6 +83,19 @@ function deleteSurvey()
     }
 }
 
+function cloneSurvey()
+{
+    $('#action').val('clone_survey');
+    if (confirm("Are you sure you want to clone this survey?"))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 /**
  * Delete a choice from a question
  */
@@ -284,6 +297,23 @@ function validateForm4() { //This works. Use for comparison
 
 }
 
+/**
+ * Clone this survey
+ */
+ function cloneForm()
+ {
+     var new_survey_name = $('#survey_name').val();
+  
+     if ($('#survey_name').val().length == 0)
+     {
+         alert('Please enter the survey title');
+         return false;
+     }
+ 
+ 
+     return true;
+ }
+
 // function checkName(inputname) {
 //     return $.ajax({
 //         url: 'validate.php?input_survey_name='+inputname
@@ -305,7 +335,7 @@ $(function()
 {
     $('#submitButton').button({ icons: { primary: 'ui-icon-disk' }}).click(validateForm);
     $('#submitAddButton').button({ icons: { primary: 'ui-icon-disk' }}).click(validateForm4);
-    //$('#submitButton').button({ icons: { primary: 'ui-icon-disk' }}).click(alert("hi"));
+    $('#cloneButton').button({ icons: { primary: 'ui-icon-disk' }}).click(cloneSurvey);
     $('#delete_survey').button({ icons: { primary: 'ui-icon-closethick' }}).click(deleteSurvey);
     $('#add_question').button({ icons: { primary: 'ui-icon-plusthick' }}).click(addQuestion);
 
